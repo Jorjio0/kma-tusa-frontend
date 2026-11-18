@@ -4,62 +4,58 @@ export default function Home() {
   return (
     <>
       <section className="hero">
-        <p className="eyebrow">Національний університет «Києво-Могилянська академія»</p>
-        <h1>Факультет природничих наук</h1>
+        <p className="eyebrow">Студентські тусовки Могилянки</p>
+        <h1>
+          Куди йдемо <span>цієї п'ятниці?</span>
+        </h1>
         <p className="lead">
-          Тут вивчають живу природу, речовину й довкілля: від молекул і клітин до екосистем. Навчання поєднує
-          фундаментальну підготовку з лабораторною та польовою практикою і власними дослідженнями студентів.
+          Вечірки, квартирники, «Бунтівники», ночі настолок і караоке в одній афіші. Знайди й обери, куди піти, за кілька
+          кліків.
         </p>
-      </section>
-
-      <section className="cards">
-        <article className="card">
-          <h3>Біологія</h3>
-          <p>Молекулярна та клітинна біологія, генетика, мікробіологія, фізіологія людини і тварин.</p>
-        </article>
-        <article className="card">
-          <h3>Екологія</h3>
-          <p>Охорона довкілля, збалансоване природокористування, моніторинг стану екосистем.</p>
-        </article>
-        <article className="card">
-          <h3>Хімія</h3>
-          <p>Органічна, неорганічна, аналітична та фізична хімія, сучасні методи аналізу речовин.</p>
-        </article>
-        <article className="card">
-          <h3>Фізика і математика</h3>
-          <p>Математичний апарат і фізичні моделі, без яких не обходиться жодна природнича наука.</p>
-        </article>
-      </section>
-
-      <section className="split">
-        <div>
-          <h2>Навчання</h2>
-          <p>
-            Студенти обирають дисципліни, слухають лекції провідних науковців, працюють у лабораторіях і виїжджають на
-            польові практики. Значну частину курсів можна обрати самостійно, щоб зібрати власну траєкторію.
-          </p>
+        <div className="hero-actions">
+          <Link to="/events" className="btn btn-primary">
+            Дивитись афішу
+          </Link>
+          <Link to="/organizers" className="btn btn-light">
+            Організатори
+          </Link>
         </div>
-        <div>
-          <h2>Дослідження</h2>
+        <div className="tags">
+          <span>Вечірки</span>
+          <span>Квартирники</span>
+          <span>Настолки</span>
+          <span>Караоке</span>
+          <span>Кіновечори</span>
+          <span>Пікніки</span>
+        </div>
+      </section>
+
+      <section className="about">
+        <h2>Про нас</h2>
+        <div className="split">
           <p>
-            Ще під час навчання студенти долучаються до наукових проєктів кафедр, виступають на конференціях і пишуть
-            курсові та кваліфікаційні роботи на основі власних експериментів.
+            Студенти Могилянки постійно влаштовують зібрання, щоб відпочити після пар. Але дізнатися про них можна лише
+            випадково: з історії в Instagram, з репосту в Telegram-чаті або від друга, який «чув, що в суботу щось буде».
+          </p>
+          <p>
+            Більшість тусовок у Могилянці <strong>благодійні</strong>, з донатом на збір, або <strong>безкоштовні</strong>.
+            Тому для кожної тусовки видно тип входу, мету збору й посилання на банку.
           </p>
         </div>
       </section>
 
       <section className="quick-links">
-        <Link to="/departments" className="quick-link">
-          <strong>Кафедри</strong>
-          <span>Структура факультету</span>
+        <Link to="/events" className="quick-link">
+          <strong>Тусовки</strong>
+          <span>Афіша на найближчі тижні</span>
         </Link>
-        <Link to="/teachers" className="quick-link">
-          <strong>Викладачі</strong>
-          <span>Хто викладає</span>
+        <Link to="/organizers" className="quick-link">
+          <strong>Організатори</strong>
+          <span>Хто робить тусовки</span>
         </Link>
-        <Link to="/courses" className="quick-link">
-          <strong>Курси</strong>
-          <span>Що вивчають</span>
+        <Link to="/venues" className="quick-link">
+          <strong>Локації</strong>
+          <span>Де вони проходять</span>
         </Link>
       </section>
     </>
