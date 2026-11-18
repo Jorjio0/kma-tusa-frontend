@@ -28,6 +28,7 @@ export default function CrudPage({
   onChanged,
   notice,
   nounAccusative,
+  readOnly = false,
 }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -149,37 +150,39 @@ export default function CrudPage({
 
       {notice}
 
-      <section className="panel" ref={formRef}>
-        <div className="panel-head">
-          <h2>{editingId === null ? `Додати ${nounAccusative}` : `Редагування (id ${editingId})`}</h2>
-          {editingId !== null && (
-            <button type="button" className="btn btn-ghost" onClick={resetForm}>
-              Скасувати
-            </button>
-          )}
-        </div>
-
-        <form onSubmit={handleSubmit} noValidate className="form-grid">
-          {fields.map((field) => (
-            <Field
-              key={field.name}
-              field={field}
-              value={form[field.name]}
-              error={fieldErrors[field.name]}
-              onChange={(v) => handleChange(field.name, v)}
-            />
-          ))}
-
-          {formError && <div className="alert alert-error full">{formError}</div>}
-
-          <div className="form-actions full">
-            <button type="submit" className="btn btn-primary" disabled={saving}>
-              {saving ? "Надсилаю…" : editingId === null ? "Створити" : "Зберегти зміни"}
-            </button>
-            {flash && <span className="flash">{flash}</span>}
+      {!readOnly && (
+        <section className="panel" ref={formRef}>
+          <div className="panel-head">
+            <h2>{editingId === null ? `Додати ${nounAccusative}` : `Редагування (id ${editingId})`}</h2>
+            {editingId !== null && (
+              <button type="button" className="btn btn-ghost" onClick={resetForm}>
+                Скасувати
+              </button>
+            )}
           </div>
-        </form>
-      </section>
+
+          <form onSubmit={handleSubmit} noValidate className="form-grid">
+            {fields.map((field) => (
+              <Field
+                key={field.name}
+                field={field}
+                value={form[field.name]}
+                error={fieldErrors[field.name]}
+                onChange={(v) => handleChange(field.name, v)}
+              />
+            ))}
+
+            {formError && <div className="alert alert-error full">{formError}</div>}
+
+            <div className="form-actions full">
+              <button type="submit" className="btn btn-primary" disabled={saving}>
+                {saving ? "Надсилаю…" : editingId === null ? "Створити" : "Зберегти зміни"}
+              </button>
+              {flash && <span className="flash">{flash}</span>}
+            </div>
+          </form>
+        </section>
+      )}
 
       <section className="panel">
         <div className="panel-head">
@@ -204,7 +207,7 @@ export default function CrudPage({
                   {columns.map((c) => (
                     <th key={c.label}>{c.label}</th>
                   ))}
-                  <th className="col-actions" aria-label="Дії" />
+                  {!readOnly && <th className="col-actions" aria-label="Дії" />}
                 </tr>
               </thead>
               <tbody>
@@ -216,19 +219,21 @@ export default function CrudPage({
                         {c.render(item)}
                       </td>
                     ))}
-                    <td className="col-actions">
-                      <button type="button" className="btn btn-small" onClick={() => startEdit(item)}>
-                        Редагувати
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-small btn-danger"
-                        onClick={() => handleDelete(item)}
-                        disabled={deletingId === item.id}
-                      >
-                        {deletingId === item.id ? "…" : "Видалити"}
-                      </button>
-                    </td>
+                    {!readOnly && (
+                      <td className="col-actions">
+                        <button type="button" className="btn btn-small" onClick={() => startEdit(item)}>
+                          Редагувати
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-small btn-danger"
+                          onClick={() => handleDelete(item)}
+                          disabled={deletingId === item.id}
+                        >
+                          {deletingId === item.id ? "…" : "Видалити"}
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
