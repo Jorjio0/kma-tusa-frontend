@@ -93,6 +93,7 @@ function resource(name) {
   };
 }
 
-export const departmentsApi = resource("departments");
-export const teachersApi = resource("teachers");
-export const coursesApi = resource("courses");
+export const categoriesApi = resource("categories");
+export const organizersApi = resource("organizers");
+export const venuesApi = resource("venues");
+export const eventsApi = resource("events");

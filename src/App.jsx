@@ -1,8 +1,9 @@
 import { NavLink, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
-import Departments from "./pages/Departments.jsx";
-import Teachers from "./pages/Teachers.jsx";
-import Courses from "./pages/Courses.jsx";
+import Events from "./pages/Events.jsx";
+import Organizers from "./pages/Organizers.jsx";
+import Venues from "./pages/Venues.jsx";
+import Categories from "./pages/Categories.jsx";
 import ResponsePanel from "./components/ResponsePanel.jsx";
 
 export default function App() {
@@ -11,17 +12,14 @@ export default function App() {
       <header className="site-header">
         <div className="container header-inner">
           <NavLink to="/" className="brand">
-            <span className="brand-mark">ФПрН</span>
-            <span className="brand-text">
-              Факультет природничих наук
-              <small>НаУКМА</small>
-            </span>
+            KMA <span>Tusa</span>
           </NavLink>
           <nav className="nav">
             <NavLink to="/" end>Головна</NavLink>
-            <NavLink to="/departments">Кафедри</NavLink>
-            <NavLink to="/teachers">Викладачі</NavLink>
-            <NavLink to="/courses">Курси</NavLink>
+            <NavLink to="/events">Тусовки</NavLink>
+            <NavLink to="/organizers">Організатори</NavLink>
+            <NavLink to="/venues">Локації</NavLink>
+            <NavLink to="/categories">Категорії</NavLink>
           </nav>
         </div>
       </header>
@@ -29,9 +27,10 @@ export default function App() {
       <main className="container main">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/departments" element={<Departments />} />
-          <Route path="/teachers" element={<Teachers />} />
-          <Route path="/courses" element={<Courses />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/organizers" element={<Organizers />} />
+          <Route path="/venues" element={<Venues />} />
+          <Route path="/categories" element={<Categories />} />
           <Route path="*" element={<p className="empty">Сторінку не знайдено.</p>} />
         </Routes>
       </main>
