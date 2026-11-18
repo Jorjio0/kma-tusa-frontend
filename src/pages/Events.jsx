@@ -1,7 +1,9 @@
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import CrudPage from "../components/CrudPage.jsx";
 import { categoriesApi, eventsApi, organizersApi, venuesApi } from "../api.js";
 import { byId, useLookup } from "../hooks.js";
+import { useAuth } from "../AuthContext.jsx";
 
 const ENTRY_TYPES = [
   { value: "free", label: "Вхід вільний" },
@@ -83,6 +85,7 @@ function entryText(e) {
 }
 
 export default function Events() {
+  const { user } = useAuth();
   const categories = useLookup(categoriesApi.list);
   const organizers = useLookup(organizersApi.list);
   const venues = useLookup(venuesApi.list);
@@ -102,8 +105,19 @@ export default function Events() {
     { name: "capacity", label: "Місткість", type: "number", required: true, min: 1, placeholder: "100" },
     { name: "entry_type", label: "Тип входу", type: "select", required: true, options: ENTRY_TYPES },
     { name: "price", label: "Ціна квитка, грн", type: "number", min: 0, hint: "Лише для платного квитка" },
-    { name: "min_donation", label: "Мінімальний донат, грн", type: "number", min: 1, hint: "Лише для тусовки за донат" },
-    { name: "fundraising_url", label: "Посилання на збір", type: "url", placeholder: "https://send.monobank.ua/jar/..." },
+    {
+      name: "min_donation",
+      label: "Мінімальний донат, грн",
+      type: "number",
+      min: 1,
+      hint: "Лише для тусовки за донат",
+    },
+    {
+      name: "fundraising_url",
+      label: "Посилання на збір",
+      type: "url",
+      placeholder: "https://send.monobank.ua/jar/...",
+    },
     { name: "fundraising_purpose", label: "Мета збору", placeholder: "Збір на FPV-дрони" },
     { name: "fundraising_goal", label: "Ціль збору, грн", type: "number", min: 1 },
     { name: "lineup", label: "Лайнап", placeholder: "DJ Ворон, DJ Pumpkin" },
@@ -121,9 +135,15 @@ export default function Events() {
         </>
       ),
     },
-    { label: "Категорія", render: (e) => categoryById[e.category]?.name ?? <span className="muted">id {e.category}</span> },
+    {
+      label: "Категорія",
+      render: (e) => categoryById[e.category]?.name ?? <span className="muted">id {e.category}</span>,
+    },
     { label: "Локація", render: (e) => venueById[e.venue]?.name ?? <span className="muted">id {e.venue}</span> },
-    { label: "Організатор", render: (e) => organizerById[e.organizer]?.name ?? <span className="muted">id {e.organizer}</span> },
+    {
+      label: "Організатор",
+      render: (e) => organizerById[e.organizer]?.name ?? <span className="muted">id {e.organizer}</span>,
+    },
     {
       label: "Вхід",
       render: (e) => (
@@ -146,7 +166,20 @@ export default function Events() {
     organizers.error && `організаторів: ${organizers.error}`,
     venues.error && `локації: ${venues.error}`,
   ].filter(Boolean);
-  const notice = errors.length ? <div className="alert alert-error">Не вдалося завантажити {errors.join("; ")}</div> : null;
+  const notice = (
+    <>
+      {errors.length > 0 && <div className="alert alert-error">Не вдалося завантажити {errors.join("; ")}</div>}
+      {!user && (
+        <div className="alert alert-info">
+          Щоб додавати й редагувати тусовки,{" "}
+          <Link to="/login" state={{ from: "/events" }}>
+            увійдіть
+          </Link>{" "}
+          або <Link to="/register">зареєструйтеся</Link>.
+        </div>
+      )}
+    </>
+  );
 
   return (
     <CrudPage
@@ -161,6 +194,7 @@ export default function Events() {
       itemLabel={(e) => e.title}
       nounAccusative="тусовку"
       notice={notice}
+      readOnly={!user}
     />
   );
 }
